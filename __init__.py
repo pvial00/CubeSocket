@@ -1,1 +1,2 @@
-from cubesocket import *
+from cubesocket import CubeSocket
+from cubesocket import CubeWrap

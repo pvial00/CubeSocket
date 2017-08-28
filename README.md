@@ -4,6 +4,9 @@ Socket bindings using the Cube90 cipher for encryption and decryption
 # Description
 CubeSocket provides two classes CubeSocket and CubeWrap.  CubeSocket is used like the ordinary socket calls but the are encapsulated with the Cube90 cipher.  CubeWrap is used to encapulate an existing socket.
 
+# Prerequisites
+pycube90
+
 # Client Example
 key = "Test"
 sock = CubeSocket(key)

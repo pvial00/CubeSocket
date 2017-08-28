@@ -2,6 +2,8 @@ from pycube90 import Cube
 import socket
 import os
 
+# v0.1.3
+
 class CubeSocket:
     def __init__(self, key):
         self.key = key

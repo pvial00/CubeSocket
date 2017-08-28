@@ -59,6 +59,18 @@ class CubeSocket:
         self.connect(host, port)
 	self.cli_keyexchange(self.sock)
 
+    def cubesend(self, buf):
+        key = self.gen_key(16)
+        self.send(key)
+        buf = Cube(key).encrypt(buf)
+        self.sock.send(buf)
+
+    def cuberecv(self, buf_size):
+        key = self.recv(16)
+        buf = self.sock.recv(buf_size)
+        buf = Cube(key).decrypt(buf)
+        return buf
+
 class CubeWrap:
     def __init__(self, sock, key):
         self.sock = CubeSocket(key)

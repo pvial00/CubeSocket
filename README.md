@@ -27,12 +27,12 @@ sock = CubeSocket("Test")
 sock.bind(host, 99)
 sock.listen(1)
 client, addr = sock.accept()
-cubesock = CubeWrap(client, sock.key)
+cubesock = CubeSocket(client, sock.key)
 test = cubesock.sock.recv(32)
 print test
 c.close()
 sock.close()
 
 # CubeWrap Example
-cubesock = CubeWrap(sock, key)
+cubesock = CubeSocket(sock, key)
 test = cubesock.sock.recv(32)

@@ -1,5 +1,6 @@
 from pycube90 import Cube
-import socket, os
+import socket
+import os
 
 class CubeSocket:
     def __init__(self, key):
@@ -50,7 +51,7 @@ class CubeSocket:
     def gen_key(self, length):
         key = ""
         for x in range(0,length):
-            char = chr((os.urandom(1) % (90 - 32 + 1)) + 32)
+            char = chr((ord(os.urandom(1)) % (90 - 32 + 1)) + 32)
             key += char
         return key
 

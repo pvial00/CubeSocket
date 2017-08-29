@@ -16,6 +16,7 @@ Supports ASCII characters 32-90
 pycube90
 
 # Client Example
+
 key = "Test"
 sock = CubeSocket(key)
 sock.cubeconnect("localhost", 99)
@@ -23,6 +24,7 @@ sock.cubesend("Test")
 sock.close()
 
 # Server Example
+
 host = "localhost"
 port = 99
 sock = CubeSocket("Test")
@@ -36,5 +38,6 @@ c.close()
 sock.close()
 
 # CubeWrap Example
+
 cubesock = CubeSocket(sock, key)
 test = cubesock.sock.recv(32)

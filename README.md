@@ -17,27 +17,27 @@ pycube90
 
 # Client Example
 
-key = "Test"
-sock = CubeSocket(key)
-sock.cubeconnect("localhost", 99)
-sock.cubesend("Test")
-sock.close()
+key = "Test"  
+sock = CubeSocket(key)  
+sock.cubeconnect("localhost", 99)  
+sock.cubesend("Test")  
+sock.close()  
 
 # Server Example
 
-host = "localhost"
-port = 99
-sock = CubeSocket("Test")
-sock.bind(host, 99)
-sock.listen(1)
-client, addr = sock.accept()
-cubesock = CubeSocket(client, sock.key)
-test = cubesock.sock.cuberecv(32)
-print test
-c.close()
-sock.close()
+host = "localhost"  
+port = 99  
+sock = CubeSocket("Test")  
+sock.bind(host, 99)  
+sock.listen(1)  
+client, addr = sock.accept()  
+cubesock = CubeSocket(client, sock.key)  
+test = cubesock.sock.cuberecv(32)  
+print test  
+c.close()  
+sock.close()  
 
 # CubeWrap Example
 
-cubesock = CubeSocket(sock, key)
-test = cubesock.sock.recv(32)
+cubesock = CubeSocket(sock, key)  
+test = cubesock.sock.recv(32)  

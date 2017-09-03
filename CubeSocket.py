@@ -2,17 +2,20 @@ from pycube90 import Cube
 import socket
 import os
 
-# v0.2.0
+# v0.3.1
 
 class CubeSocket:
-    def __init__(self, key, nonce_support=1, dc=0):
+    def __init__(self, key, nonce_support=1, dc=0, mode=0):
         self.key = key
         self.session_key = ""
         self.nonce_support = nonce_support
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.key_length = 16
         self.nonce_length = 16
         self.direct_connect = dc
+        if mode == 0:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        elif mode == 1:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def wrap(self, sock):
         self.sock = sock
@@ -111,6 +114,31 @@ class CubeSocket:
             buf = self.sock.recv(buf_size)
             buf = Cube(session_key).decrypt(buf)
         return buf
+
+    def cubesendto(self, buf, ip, port):
+        if self.nonce_support == 1:
+            nonce = self.gen_key(self.nonce_length)
+            buf = Cube(self.key, nonce).encrypt(buf)
+            self.sock.sendto(nonce+buf, (ip, port))
+        elif self.nonce_support == 0:
+            session_key = self.gen_key(self.key_length)
+            buf = Cube(session_key).encrypt(buf)
+            session_key = Cube(self.key).encrypt(session_key)
+            self.sock.sendto(session_key+buf, (ip, port))
+
+    def cuberecvfrom(self, buf_size):
+        if self.nonce_support == 1:
+            buf, addr = self.sock.recvfrom(buf_size)
+            nonce = buf[0:16]
+            data = buf[16:]
+            data = Cube(self.key, nonce).decrypt(data)
+        elif self.nonce_support == 0:
+            buf, addr = self.sock.recvfrom(buf_size)
+            session_key = buf[0:16]
+            session_key = Cube(self.key).decrypt(session_key)
+            data = buf[16:]
+            data = Cube(session_key).decrypt(data)
+        return data
 
 class CubeWrap:
     def __init__(self, sock, key, nonce_support=1):

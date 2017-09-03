@@ -41,3 +41,26 @@ sock.close()
 
 cubesock = CubeSocket(sock, key)  
 test = cubesock.sock.recv(32)  
+
+# UDP client example
+
+from CubeSocket import CubeSocket  
+
+host = "localhost"  
+port = 1666  
+
+socket = CubeSocket("NEVER", nonce_support=1,  mode=1)  
+socket.cubesendto("HELLO", host, port)  
+
+# UDP Server example
+
+from CubeSocket import CubeSocket
+
+host = "localhost"  
+port = 1666  
+
+socket = CubeSocket("NEVER", nonce_support=1, mode=1)  
+socket.bind(host, port)  
+while True:  
+    data = socket.cuberecvfrom(1024)  
+    print data  

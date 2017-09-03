@@ -2,7 +2,7 @@ from pycube90 import Cube
 import socket
 import os
 
-# v0.3.1
+# v0.2.1
 
 class CubeSocket:
     def __init__(self, key, nonce_support=1, dc=0, mode=0):

@@ -49,7 +49,7 @@ from CubeSocket import CubeSocket
 host = "localhost"  
 port = 1666  
 
-socket = CubeSocket("NEVER", nonce_support=1,  mode=1)  
+socket = CubeSocket("NEVER")  
 socket.cubesendto("HELLO", host, port)  
 
 # UDP Server example
@@ -59,8 +59,28 @@ from CubeSocket import CubeSocket
 host = "localhost"  
 port = 1666  
 
-socket = CubeSocket("NEVER", nonce_support=1, mode=1)  
+socket = CubeSocket("NEVER")  
 socket.bind(host, port)  
 while True:  
     data = socket.cuberecvfrom(1024)  
     print data  
+
+# Server/Client communication using session key
+
+
+host = "localhost"
+sock = CubeSocket("Test", dc=0)
+sock.bind(host, 99)
+sock.listen(1)
+client, addr = sock.accept()
+cubesock = CubeSocket(client, sock.session_key)
+test = cubesock.cubesock.cuberecv(32)
+print test
+c.close()
+sock.close()
+
+key = "Test"
+sock = CubeSocket(key, dc=0)
+sock.cubeconnect("localhost", 99)
+sock.cubesend("Test")
+sock.close()

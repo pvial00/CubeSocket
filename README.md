@@ -1,38 +1,19 @@
-# CubeSocket
-Socket bindings using the Cube90 cipher for encryption and decryption
+# Fold
+Custom binary encoding using a 67 byte charset  
+Padding is enabled by default and decode is not supported without it just yet.  
 
-# Description
-CubeSocket provides two classes CubeSocket and CubeWrap.  CubeSocket is used like the ordinary socket calls but the are encapsulated with the Cube90 cipher.  CubeWrap is used to encapulate an existing socket.
+The encoding can be keyed so that only the holder of the key can unlock the encoding.  Binary keys are supported.  
 
-The cubeconnect method utilizes a pre-shared key to exchange a random 16 character session key with the server and then proceeds using the session key.
+# Usage:  
+from Fold import Fold  
+Fold().encode(data)  
+Fold().decode(data)  
 
-A socket can be utilized directly without a secure handshake by calling CubeSocket's connect method.  The key must be known on either end.
+With keys:  
 
-Supports ASCII characters 32-90
+Fold(key).encode(data)  
+Fold(key.decode(data)  
 
-# Prerequisites
-pycube90
-
-# Client Example
-key = "Test"
-sock = CubeSocket(key)
-sock.cubeconnect("localhost", 99)
-sock.send("Test")
-sock.close()
-
-# Server Example
-host = "localhost"
-port = 99
-sock = CubeSocket("Test")
-sock.bind(host, 99)
-sock.listen(1)
-client, addr = sock.accept()
-cubesock = CubeWrap(client, sock.key)
-test = cubesock.sock.recv(32)
-print test
-c.close()
-sock.close()
-
-# CubeWrap Example
-cubesock = CubeWrap(sock, key)
-test = cubesock.sock.recv(32)
+# Example encoding  
+We hold these truths to be self-evident, that all men are created equal  
+VYZaI=a=beb=Z=I=d=a=ZacfZaI=d=ceded=a=cfI=d=beI=YaZaI=cfZab=ZbLMZadfabZ=Zabdd=L=I=d=a=YZd=I=YZb=b=I=bcZabdI=YZceZaI=YbceZaYZd=ZaZ=I=ZacddeYZb=  
